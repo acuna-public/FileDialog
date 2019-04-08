@@ -8,7 +8,9 @@ FileDialog is a handy file selection dialog for Android.<br>
     dialog.setTitle (R.string.dialog_title);      // Dialog title
     dialog.setStorage (storage);                  // Set storage (optional). Default is Android file system
     dialog.setRootPath ("path");                  // Root path
+    dialog.setFileContent ("123");                // Write this content to file (when FileSaveListener () callback called) 
     dialog.setStyle (R.style.Dialog);             // Dialog theme style (optional)
+    dialog.setListener (listener)                 // Set listener (see manual below)
     dialog.setFileType ("jpg", "txt");            // Files extensions to show in file list
     dialog.setShowType (FileDialog.Type.ALL);     // Files show types: FILES, FOLDERS, ALL
     
@@ -39,7 +41,7 @@ On folder select and submit:
     dialog.setListener (new FileDialog.FolderListener () {
         
         @Override
-        public String onSubmit (Item folder) { // Press OK button
+        public String onSubmit (Item folder) { // Pressed "OK" button
             return file.read ();
         }
 		
@@ -49,7 +51,7 @@ On folder select and submit:
         }
 
         @Override
-        public void onCreateDir (Item file) {
+        public void onCreateDir (Item folder) {
             Toast.makeText (getApplicationContext (), String.format ("Folder %f was created", file.toString ()), Toast.LENGTH_SHORT).show ();
         }
         
@@ -80,7 +82,7 @@ On file open:
         }
 
         @Override
-        public void onSelect (Item file, DialogInterface dialog) {
+        public void onSelect (Item file) {
             Toast.makeText (getApplicationContext (), String.format ("Folder %f was selected", file.toString ()), Toast.LENGTH_SHORT).show ();
         }
 
@@ -101,7 +103,7 @@ On file save
         }
 
         @Override
-        public void onCreateDir (Item file) {
+        public void onCreateDir (Item folder) {
             Toast.makeText (getApplicationContext (), String.format ("Folder %f was created", file.toString ()), Toast.LENGTH_SHORT).show ();
         }
 
