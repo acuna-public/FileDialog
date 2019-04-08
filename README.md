@@ -3,6 +3,8 @@ FileDialog is a pretty file selection dialog for Android
 
 ![screenshot](https://github.com/acuna-public/FileDialog/blob/master/screenshot.png?raw=true)
 
+**Advantages**
+
 - Material Design
 - Supports Android 4.0+
 - Cloud storages support (Use [Storager](https://github.com/acuna-public/Storager) library for this)
