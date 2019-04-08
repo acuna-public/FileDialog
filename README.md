@@ -14,24 +14,105 @@ FileDialog is a handy file selection dialog for Android.<br>
     
 Callbacks:
     
+    // On file select:
+    
+    dialog.setListener (new FileDialog.SelectFileListener () {
+        
+        @Override
+        public void onSelect (Item file, DialogInterface dialog) {
+            
+            dialog.dismiss ();
+            
+            Toast.makeText (getApplicationContext (), String.format ("File %f was selected", file.toString ()), Toast.LENGTH_SHORT).show ();
+            
+        }
+
+        @Override
+        public void onError (Exception e) {
+            Toast.makeText (getApplicationContext (), e.getMessage (), Toast.LENGTH_SHORT).show ();
+        }
+
+    });
+    
+    // On folder submit and select:
+    
+    dialog.setListener (new FileDialog.FolderListener () {
+        
+        @Override
+        public String onSubmit (Item folder) { // Press OK button
+            return file.read ();
+        }
+		
+        @Override
+        public void onSelect (Item file) {
+            Toast.makeText (getApplicationContext (), String.format ((file.isDir () ? "Folder" : "File") + " %f was selected", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
+
+        @Override
+        public void onCreateDir (Item file) {
+            Toast.makeText (getApplicationContext (), String.format ("Folder %f was created", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
+        
+        @Override
+        public void onError (Exception e) {
+            Toast.makeText (getApplicationContext (), e.getMessage (), Toast.LENGTH_SHORT).show ();
+        }
+
+    });
+    
+    // On file open:
+    
+    dialog.setListener (new FileDialog.FileOpenListener () {
+        
+        @Override
+        public String onOpen (Item file) {
+            return file.read ();
+        }
+		
+        @Override
+        public void onSave (Item file, String content) {
+            Toast.makeText (getApplicationContext (), String.format ("File %f was saved", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
+
+        @Override
+        public void onCreateDir (Item file) {
+            Toast.makeText (getApplicationContext (), String.format ("Folder %f was created", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
+
+        @Override
+        public void onSelect (Item file, DialogInterface dialog) {
+            Toast.makeText (getApplicationContext (), String.format ("Folder %f was selected", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
+
+        @Override
+        public void onError (Exception e) {
+            Toast.makeText (getApplicationContext (), e.getMessage (), Toast.LENGTH_SHORT).show ();
+        }
+
+    });
+    
+    // On file save
+    
     dialog.setListener (new FileDialog.FileSaveListener () {
 
         @Override
         public void onSave (Item file, String content) {
-
-            OS.alert (getApplicationContext (), getString (R.string.message_save_apps_success).replace ("%f", file.toString ()));
+            Toast.makeText (getApplicationContext (), String.format ("File %f was saved", file.toString ()), Toast.LENGTH_SHORT).show ();
         }
 
         @Override
-        public void onCreateDir (Item file) {}
+        public void onCreateDir (Item file) {
+            Toast.makeText (getApplicationContext (), String.format ("Folder %f was created", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
 
         @Override
-        public void onSelect (Item file, DialogInterface dialog) {}
+        public void onSelect (Item file, DialogInterface dialog) {
+            Toast.makeText (getApplicationContext (), String.format ("Folder %f was selected", file.toString ()), Toast.LENGTH_SHORT).show ();
+        }
 
         @Override
         public void onError (Exception e) {
-
-            OS.alert (getApplicationContext (), e);
+            Toast.makeText (getApplicationContext (), e.getMessage (), Toast.LENGTH_SHORT).show ();
         }
 
     });
