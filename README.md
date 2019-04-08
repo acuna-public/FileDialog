@@ -1,5 +1,5 @@
 # FileDialog
-FileDialog is a handy file selection dialog for Android.<br>
+FileDialog is a pretty file selection dialog for Android<br>
 <br>
 **Usage**
 
