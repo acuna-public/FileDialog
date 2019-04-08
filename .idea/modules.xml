@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FileDialog.iml" filepath="$PROJECT_DIR$/FileDialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileDialog.iml" filepath="$PROJECT_DIR$/FileDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Andromeda/andromeda/andromeda.iml" filepath="$PROJECT_DIR$/../Andromeda/andromeda/andromeda.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Archiver/archiver/archiver.iml" filepath="$PROJECT_DIR$/../Archiver/archiver/archiver.iml" />
       <module fileurl="file://$PROJECT_DIR$/filedialog/filedialog.iml" filepath="$PROJECT_DIR$/filedialog/filedialog.iml" />
