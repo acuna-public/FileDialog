@@ -1,6 +1,8 @@
 # FileDialog
-FileDialog is a pretty file selection dialog for Android<br>
-<br>
+FileDialog is a pretty file selection dialog for Android
+
+![screenshot]
+
 **Usage**
 
     FileDialog dialog = new FileDialog (MainActivity.this);
