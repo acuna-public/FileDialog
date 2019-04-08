@@ -14,7 +14,7 @@ FileDialog is a handy file selection dialog for Android.<br>
     
 Callbacks:
     
-    // On file select:
+On file select:
     
     dialog.setListener (new FileDialog.SelectFileListener () {
         
@@ -34,7 +34,7 @@ Callbacks:
 
     });
     
-    // On folder submit and select:
+On folder select and submit:
     
     dialog.setListener (new FileDialog.FolderListener () {
         
@@ -60,7 +60,7 @@ Callbacks:
 
     });
     
-    // On file open:
+On file open:
     
     dialog.setListener (new FileDialog.FileOpenListener () {
         
@@ -91,7 +91,7 @@ Callbacks:
 
     });
     
-    // On file save
+On file save
     
     dialog.setListener (new FileDialog.FileSaveListener () {
 
@@ -116,5 +116,7 @@ Callbacks:
         }
 
     });
+    
+Do not forget to call `show ()` to draw the dialog:
 
-    dialog.show (); // Show dialog (necessary)
+    dialog.show ();
