@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<color name="fd_gray">#888</color>
+	
+	<color name="file_dialog_item_active">#888</color>
+	<color name="file_dialog_item_inactive">#ccc</color>
+	
+</resources>

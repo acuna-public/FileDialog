@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FileDialog.iml" filepath="$PROJECT_DIR$/FileDialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Andromeda/andromeda/andromeda.iml" filepath="$PROJECT_DIR$/../Andromeda/andromeda/andromeda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Archiver/archiver/archiver.iml" filepath="$PROJECT_DIR$/../Archiver/archiver/archiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/filedialog/filedialog.iml" filepath="$PROJECT_DIR$/filedialog/filedialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../JabaDaba/jabadaba/jabadaba.iml" filepath="$PROJECT_DIR$/../JabaDaba/jabadaba/jabadaba.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../[Side]/JSON/json/json.iml" filepath="$PROJECT_DIR$/../[Side]/JSON/json/json.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../[Side]/jTar/jtar/jtar.iml" filepath="$PROJECT_DIR$/../[Side]/jTar/jtar/jtar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Storage/storage/storage.iml" filepath="$PROJECT_DIR$/../Storage/storage/storage.iml" />
+    </modules>
+  </component>
+</project>
