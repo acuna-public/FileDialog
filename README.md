@@ -1,5 +1,5 @@
 # FileDialog
-FileDialog is a pretty file selection dialog for Android
+FileDialog is a pretty file selection dialog for Android. Supports Android 4.0+
 
 ![screenshot](https://github.com/acuna-public/FileDialog/blob/master/screenshot.png?raw=true)
 
