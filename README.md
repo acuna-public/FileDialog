@@ -26,6 +26,7 @@ dialog.setFileType ("jpg", "txt");            // Files extensions to show in fil
 dialog.setShowType (FileDialog.Type.ALL);     // Files show types: FILES, FOLDERS, ALL
 dialog.show ();                               // Do not forget to call this to draw the dialog!
 ~~~
+<br>
 
 **Callbacks**
 
