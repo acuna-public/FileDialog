@@ -4,7 +4,7 @@ FileDialog is a pretty file selection dialog for Android
 ![screenshot](https://github.com/acuna-public/FileDialog/blob/master/screenshot.png?raw=true)
 <br>
 <br>
-**Advantages**
+### Advantages
 
 - Material Design
 - Supports Android 4.0+
@@ -12,7 +12,7 @@ FileDialog is a pretty file selection dialog for Android
 - Themes support
 <br>
 
-**Usage**
+### Usage
 
 ~~~java
 FileDialog dialog = new FileDialog (MainActivity.this);
@@ -29,7 +29,7 @@ dialog.show ();                               // Do not forget to call this to d
 ~~~
 <br>
 
-### Callbacks
+**Callbacks**
 
 On file select:
 
