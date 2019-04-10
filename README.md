@@ -23,7 +23,6 @@ dialog.setStyle (R.style.Dialog);             // Dialog theme style (optional)
 dialog.setListener (listener)                 // Set listener (see manual below)
 dialog.setFileType ("jpg", "txt");            // Files extensions to show in file list
 dialog.setShowType (FileDialog.Type.ALL);     // Files show types: FILES, FOLDERS, ALL
-
 dialog.show ();                               // Do not forget to call this to draw the dialog!
 ~~~
 
