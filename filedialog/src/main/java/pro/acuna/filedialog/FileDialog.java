@@ -270,7 +270,7 @@
 				
 				if (Int.size (errors) == 0) {
 					
-					AlertDialog.Builder builder = dialogBuilder (activity);
+					AlertDialog.Builder builder = dialogBuilder ();
 					
 					if (title > 0 && level == 0)
 						builder.setTitle (title);
@@ -465,7 +465,7 @@
 		
 		private void fileExists (Item file, final DialogInterface dialog) {
 			
-			AlertDialog.Builder newBuilder = dialogBuilder (activity);
+			AlertDialog.Builder newBuilder = dialogBuilder ();
 			
 			newBuilder.setTitle (R.string.title_alert);
 			newBuilder.setMessage (activity.getString (R.string.message_file_exists).replace ("%f", file.toString ()));
@@ -553,7 +553,7 @@
 			
 			if (saveName.equals ("")) {
 				
-				AlertDialog.Builder builder = dialogBuilder (activity);
+				AlertDialog.Builder builder = dialogBuilder ();
 				builder.setTitle (title);
 				
 				final ViewGroup parent = null;
@@ -749,7 +749,7 @@
 			
 		}
 		
-		private AlertDialog.Builder dialogBuilder (Activity activity) {
+		private AlertDialog.Builder dialogBuilder () {
 			return new AlertDialog.Builder (activity, style);
 		}
 		
