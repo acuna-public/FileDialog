@@ -13,11 +13,14 @@
     
   }
   
+  apply from: 'https://raw.githubusercontent.com/acuna-public/MavenUpload/master/bintray.gradle'
+  apply from: 'https://raw.githubusercontent.com/acuna-public/MavenUpload/master/publish.gradle'
+  
   dependencies {
     
     implementation fileTree (include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     
-    api project (':storage')
-    
+		api 'pro.acuna:storage:+'
+  
   }

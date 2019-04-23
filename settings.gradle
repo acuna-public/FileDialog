@@ -1,8 +1,1 @@
-  include ':filedialog', ':jtar', ':json', ':jabadaba', ':archiver', ':andromeda', ':storage'
-  
-  project (':jtar').projectDir = new File ('C:\\Projects\\AndroidStudio\\[Side]\\jTar\\jtar')
-  project (':json').projectDir = new File ('C:\\Projects\\AndroidStudio\\[Side]\\JSON\\json')
-  project (':jabadaba').projectDir = new File ('C:\\Projects\\AndroidStudio\\JabaDaba\\jabadaba')
-  project (':archiver').projectDir = new File ('C:\\Projects\\AndroidStudio\\Archiver\\archiver')
-  project (':andromeda').projectDir = new File ('C:\\Projects\\AndroidStudio\\Andromeda\\andromeda')
-  project (':storage').projectDir = new File ('C:\\Projects\\AndroidStudio\\Storage\\storage')
+  include ':filedialog'

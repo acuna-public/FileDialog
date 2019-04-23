@@ -7,14 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../Andromeda/andromeda" />
-            <option value="$PROJECT_DIR$/../Archiver/archiver" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/filedialog" />
-            <option value="$PROJECT_DIR$/../JabaDaba/jabadaba" />
-            <option value="$PROJECT_DIR$/../Storage/storage" />
-            <option value="$PROJECT_DIR$/../[Side]/JSON/json" />
-            <option value="$PROJECT_DIR$/../[Side]/jTar/jtar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
