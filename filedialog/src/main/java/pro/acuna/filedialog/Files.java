@@ -10,7 +10,6 @@
 	import java.util.Map;
 	
 	import pro.acuna.andromeda.Graphic;
-	import pro.acuna.filedialog.R;
 	import pro.acuna.jabadaba.exceptions.OutOfMemoryException;
 	import pro.acuna.storage.Item;
 	import pro.acuna.storage.StorageException;
