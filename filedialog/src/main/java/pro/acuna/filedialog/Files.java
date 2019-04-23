@@ -16,7 +16,7 @@
 	import pro.acuna.storage.StorageException;
 	
 	public class Files extends Provider {
-		
+	 
 		private Map<String, Integer> icons = new HashMap<> ();
 		
 		public Files (Item item) {
