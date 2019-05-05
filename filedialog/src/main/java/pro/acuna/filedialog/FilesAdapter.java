@@ -30,7 +30,7 @@
 			
 		}
 		
-		public FilesAdapter setListener (Listener listener) {
+		public FilesAdapter setListener (Listener listener) { // TODO: Unite with global listener?
 			
 			this.listener = listener;
 			return this;
@@ -70,7 +70,7 @@
 			try {
 				
 				holder.imageView.setImageDrawable (item.getImage ());
-				holder.textView.setText (item.folderTitle ());
+				holder.textView.setText (item.folderTitle ()); // TODO: Gray color if hidden
 				
 				if (listener != null) listener.onView (holder);
 				
