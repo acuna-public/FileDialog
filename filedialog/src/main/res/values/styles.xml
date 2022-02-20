@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
-	<style name="FileDialogText">
-		<item name="android:textSize">17sp</item>
-		<item name="android:textColor">@color/fd_gray</item>
-	</style>
-	
+  
+  <style name="FileDialogText">
+    <item name="android:textSize">17sp</item>
+    <item name="android:textColor">@color/fd_gray</item>
+  </style>
+  
 </resources>

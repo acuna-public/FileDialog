@@ -1,4 +1,4 @@
-	package pro.acuna.filedialog;
+	package ru.ointeractive.filedialog;
 	/*
 	 Created by Acuna on 19.12.2018
 	*/
@@ -11,11 +11,13 @@
 	import android.widget.ArrayAdapter;
 	import android.widget.ImageView;
 	import android.widget.TextView;
+  
+  import java.io.IOException;
+  import java.util.List;
 	
-	import java.util.List;
-	
-	import pro.acuna.jabadaba.exceptions.OutOfMemoryException;
-	import pro.acuna.storage.StorageException;
+	import upl.core.exceptions.HttpRequestException;
+	import ru.ointeractive.jstorage.StorageException;
+	import upl.core.exceptions.OutOfMemoryException;
 	
 	public class FilesAdapter extends ArrayAdapter<Provider> {
 		
@@ -58,23 +60,23 @@
 				LayoutInflater inflater = LayoutInflater.from (parent.getContext ());
 				view = inflater.inflate (layout, parent, false);
 				
-				holder.imageView = view.findViewById (R.id.icon);
-				holder.textView = view.findViewById (R.id.title);
+				holder.imageView = (ImageView) view.findViewById (R.id.icon);
+				holder.textView = (TextView) view.findViewById (R.id.title);
 				
 				view.setTag (holder);
 				
 			} else holder = (ViewHolder) view.getTag ();
 			
-			Provider item = filesList.get (position);
+			Provider provider = filesList.get (position);
 			
 			try {
 				
-				holder.imageView.setImageDrawable (item.getImage ());
-				holder.textView.setText (item.folderTitle ()); // TODO: Gray color if hidden
+				holder.imageView.setImageBitmap (provider.getImage ());
+				holder.textView.setText (provider.folderTitle ()); // TODO: Gray color if hidden
 				
 				if (listener != null) listener.onView (holder);
 				
-			} catch (StorageException | OutOfMemoryException e) {
+			} catch (IOException | HttpRequestException | StorageException | OutOfMemoryException e) {
 				holder.textView.setText (e.getMessage ());
 			}
 			

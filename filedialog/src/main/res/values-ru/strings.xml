@@ -1,21 +1,23 @@
 <resources>
-	
-	<string name="title_multi">Выберите изображения</string>
-	
-	<string name="title_save">Сохранение файла</string>
-	<string name="file_hint">Введите название файла</string>
-	<string name="dir_hint">Введите название папки</string>
-	<string name="message_filename_empty">Введите название файла</string>
-	<string name="button_new_dir">Создать папку</string>
-	<string name="message_dir_empty">Введите название папки</string>
-	<string name="message_dir_exists">Папка с таким именем уже существует. Пожалуйста, ведите другое имя.</string>
-	<string name="message_new_dir_success">Каталог успешно создан</string>
-	<string name="message_new_dir_error">Не удалось создать каталог. Попробуйте создать его в другом каталоге.</string>
-	<string name="message_file_write_error">При записи произошла ошибка</string>
-	<string name="message_file_exists">Файл с таким именем уже существует. Заменить?</string>
-	<string name="button_close">Закрыть</string>
-	<string name="title_alert">Уведомление</string>
-	<string name="yes">Да</string>
-	<string name="no">Нет</string>
+  
+  <string name="title_multi">Выберите изображения</string>
+  
+  <string name="title_save">Сохранение файла</string>
+  <string name="file_hint">Введите название файла</string>
+  <string name="dir_hint">Введите название папки</string>
+  <string name="message_filename_empty">Введите название файла</string>
+  <string name="button_new_dir">Создать папку</string>
+  <string name="message_dir_empty">Введите название папки</string>
+  <string name="message_dir_exists">Папка с таким именем уже существует. Пожалуйста, ведите другое имя.</string>
+  <string name="message_new_dir_success">Каталог успешно создан</string>
+  <string name="message_new_dir_error">Не удалось создать каталог. Попробуйте создать его в другом каталоге.</string>
+  <string name="message_file_write_error">При записи произошла ошибка</string>
+  <string name="message_file_exists">Файл с таким именем уже существует. Заменить?</string>
+  <string name="button_close">Закрыть</string>
+  <string name="title_alert">Уведомление</string>
+  <string name="dialog_title_save_dir">Выберите каталог</string>
+  
+  <string name="yes">Да</string>
+  <string name="no">Нет</string>
 
 </resources>

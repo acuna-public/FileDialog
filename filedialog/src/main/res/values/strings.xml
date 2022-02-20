@@ -1,23 +1,26 @@
 <resources>
-	
-	<string name="app_name">FileManager</string>
-	
-	<string name="title_multi">Select images</string>
-	
-	<string name="title_save">File save</string>
-	<string name="file_hint">Input a file name</string>
-	<string name="dir_hint">Input a folder name</string>
-	<string name="message_filename_empty">Input a file name</string>
-	<string name="button_new_dir">Create folder</string>
-	<string name="message_dir_empty">Input the folder name</string>
-	<string name="message_dir_exists">Folder with this name is already exists. Please input another name</string>
-	<string name="message_new_dir_success">Folder created successfully</string>
-	<string name="message_new_dir_error">Can\'t create folder. Try to create it in another place.</string>
-	<string name="message_file_write_error">Can\'t create file</string>
-	<string name="message_file_exists">File with this name is already exists. Do you want to replace it?</string>
-	<string name="button_close">Close</string>
-	<string name="title_alert">Alert</string>
-	<string name="yes">Yes</string>
-	<string name="no">No</string>
+  
+  <string name="app_name">FileManager</string>
+  
+  <string name="title_multi">Select images</string>
+  
+  <string name="title_save">File save</string>
+  <string name="file_hint">Input a file name</string>
+  <string name="dir_hint">Input a folder name</string>
+  <string name="message_filename_empty">Input a file name</string>
+  <string name="button_new_dir">Create folder</string>
+  <string name="message_dir_empty">Input the folder name</string>
+  <string name="message_dir_exists">Folder with this name is already exists. Please input another name</string>
+  <string name="message_new_dir_success">Folder created successfully</string>
+  <string name="message_new_dir_error">Can\'t create folder. Try to create it in another place.</string>
+  <string name="message_file_write_error">Can\'t create file</string>
+  <string name="message_file_exists">File with this name is already exists. Do you want to replace it?</string>
+  <string name="button_close">Close</string>
+  
+  <string name="title_alert">Alert</string>
+  <string name="dialog_title_save_dir">Choose directory</string>
+  
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
 
 </resources>

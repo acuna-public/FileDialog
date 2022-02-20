@@ -2,26 +2,28 @@
   
   android {
     
-    compileSdkVersion 28
+    compileSdkVersion 29
     
     defaultConfig {
       
-      minSdkVersion 14
-      versionName project.property ('libraryVersion')
-      
-    }
-    
+      minSdkVersion 4
+	
+		}
+  
   }
   
-  apply from: 'https://raw.githubusercontent.com/acuna-public/MavenUpload/master/bintray.gradle'
-  apply from: 'https://raw.githubusercontent.com/acuna-public/MavenUpload/master/publish.gradle'
-  
+  //apply from: 'https://raw.githubusercontent.com/acuna-public/MavenUpload/master/bintray.gradle'
+  //apply from: 'https://raw.githubusercontent.com/acuna-public/MavenUpload/master/publish.gradle'
+	
   dependencies {
     
     implementation fileTree (include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+		
+    implementation 'com.android.support:appcompat-v7:25.3.1'
     
-		api 'pro.acuna:storage:+'
-    //api project (':storage')
+		//api 'ru.ointeractive:archiver:+'
+    api project (':archiver')
+		//api 'ru.ointeractive:storage:+'
+    api project (':storage')
     
   }

@@ -1,4 +1,4 @@
-  package pro.acuna.filedialog;
+  package ru.ointeractive.filedialog;
   /*
    Created by Acuna on 15.09.2016
   */
@@ -7,32 +7,32 @@
   import android.app.AlertDialog;
   import android.app.ProgressDialog;
   import android.content.DialogInterface;
-  import android.os.AsyncTask;
   import android.view.LayoutInflater;
   import android.view.View;
-  import android.view.ViewGroup;
   import android.widget.EditText;
-  
-  import org.json.JSONException;
-  import org.json.JSONObject;
   
   import java.io.IOException;
   import java.net.URL;
-  import java.util.ArrayList;
-  import java.util.List;
   
-  import pro.acuna.jabadaba.Arrays;
-  import pro.acuna.jabadaba.Files;
-  import pro.acuna.jabadaba.Int;
-  import pro.acuna.jabadaba.exceptions.OutOfMemoryException;
-  import pro.acuna.storage.Item;
-  import pro.acuna.storage.Storage;
-  import pro.acuna.storage.StorageException;
-  import pro.acuna.storage.providers.SDCard;
-  
+  import ru.ointeractive.andromeda.OS;
+  import ru.ointeractive.andromeda.AsyncTask;
+  import ru.ointeractive.jabadaba.Files;
+  import ru.ointeractive.jabadaba.Int;
+  import ru.ointeractive.jstorage.Item;
+  import ru.ointeractive.storage.Storage;
+  import ru.ointeractive.jstorage.StorageException;
+  import ru.ointeractive.jstorage.adapters.SDCard;
+  import upl.core.Arrays;
+  import upl.core.Log;
+  import upl.core.exceptions.OutOfMemoryException;
+  import upl.json.JSONException;
+  import upl.json.JSONObject;
+  import upl.util.ArrayList;
+  import upl.util.List;
+
   public class FileDialog {
-    
-    private Storage storage;
+   
+  	private Storage storage;
     static final String PARENT_DIR = "..";
     private int level = 0;
     private Item currentPath;
@@ -81,7 +81,13 @@
       
     }
     
-    private String rootPath = "/";
+    public enum SelectionType {
+      
+      MULTIPLE,
+      
+    }
+    
+    private String rootPath = "";
     
     public FileDialog setRootPath (String rootPath) {
       
@@ -101,7 +107,7 @@
       
     }
     
-    public enum Type {FILES, FOLDERS, ALL}
+    public enum Type { FOLDERS, ALL }
     
     private int title = 0;
     
@@ -120,13 +126,13 @@
     }
     
     public FileDialog setStorage (Storage storage) {
-      
-      this.storage = storage;
+	
+	    this.storage = storage;
       return this;
       
     }
     
-    public FileDialog (Activity activity) {
+	  public FileDialog (Activity activity) {
       
       this.activity = activity;
       if (layout == -1) layout = R.layout.item;
@@ -143,8 +149,6 @@
     public FileDialog setListener (FileSaveListener listener) {
       
       fileListener = listener;
-      setShowType (Type.FOLDERS);
-      
       return this;
       
     }
@@ -175,7 +179,7 @@
     private class ShowItems extends AsyncTask<Void, Void, List<Provider>> {
       
       private ProgressDialog progress;
-      private List<Exception> errors = new ArrayList<> ();
+      private final List<Exception> errors = new ArrayList<> ();
       
       @Override
       protected void onPreExecute () {
@@ -192,10 +196,11 @@
         
         try {
           
-          if (storage == null) {
+          if (storage == null)
+            setStorage (new Storage (activity));
             
-            storage = new Storage (activity);
-            
+          if (storage.provider == null) {
+          	
             SDCard sdcard = new SDCard ();
             
             JSONObject data = new JSONObject ();
@@ -205,28 +210,25 @@
             JSONObject data2 = new JSONObject ();
             data2.put (sdcard.getName (), data);
             
-            storage.init (sdcard.getName (), data2);
+	          storage.setConfigs (data2);
+            storage.getProvider (sdcard.getName ());
             
           }
           
           if (currentPath == null) {
             
-            if (rootPath != null) storage.makeDir (rootPath);
-            currentPath = storage.toItem (rootPath).isDir (true);
+            currentPath = storage.setDir (rootPath);
+            storage.makeDir (currentPath);
             
           }
           
-          provider = new pro.acuna.filedialog.Files (currentPath);
+          provider = new ru.ointeractive.filedialog.Files (currentPath);
           
-          provider = provider.toProvider (currentPath);
+          provider = provider.newInstance (currentPath);
           List<Provider> mFiles = provider.list ();
           
-          //if (currentPath.getParent () != null) {
-          
-          if (!currentPath.getParent ().getFile ().equals ("/"))
-            files.add (provider.toProvider (storage.toItem (PARENT_DIR).isDir (true)));
-          
-          //}
+          if (!currentPath.getParent ().getShortFile ().equals (""))
+            files.add (provider.newInstance (storage.setDir (PARENT_DIR)));
           
           if (Int.size (mFiles) > 0) {
             
@@ -234,7 +236,7 @@
               
               if (
                 (
-                  showType != Type.FOLDERS && !file.isDir ()
+                  showType != Type.FOLDERS && !file.item.isDir
                   && (
                     (Int.size (fileEndsWith) > 0 && Arrays.contains (Files.getExtension (file.toString ()), fileEndsWith))
                     ||
@@ -244,7 +246,7 @@
                     ||
                     Int.size (allowNames) == 0
                   )
-                ) || file.isDir ()
+                ) || file.item.isDir
               ) {
                 
                 files.add (file);
@@ -258,7 +260,7 @@
             
           }
           
-        } catch (StorageException | JSONException | OutOfMemoryException e) {
+        } catch (StorageException | OutOfMemoryException | JSONException e) {
           errors.add (e);
         }
         
@@ -276,7 +278,7 @@
           if (title > 0 && level == 0)
             builder.setTitle (title);
           else
-            builder.setTitle (currentPath.toString ());
+            builder.setTitle (currentPath.getShortFile ());
           
           if (selectFileListener == null || dirListener != null) {
             
@@ -303,7 +305,7 @@
             });
             
           }
-          
+	        
           builder.setAdapter (new FilesAdapter (activity, R.layout.dialog, layout, files), new DialogInterface.OnClickListener () {
             
             @Override
@@ -312,12 +314,14 @@
               mDialog = dialog;
               Item selected = files.get (id).item;
               
-              if (Files.getName (selected.getFile (), true).equals (PARENT_DIR))
-                currentPath = currentPath.getParent ();
+              boolean isParent = Files.getName (selected.getShortFile (), true).equals (PARENT_DIR);
+              
+              if (isParent)
+	              currentPath = currentPath.getParent ();
               else
                 currentPath = selected;
               
-              if (currentPath.isDir ()) { // Открываем папку
+              if (currentPath.isDir || currentPath.getShortFile ().equals ("")) { // Открываем папку
                 
                 if (dirListener != null)
                   dirListener.onSelect (currentPath);
@@ -329,9 +333,9 @@
                 level = 1;
                 new ShowItems ().execute ();
                 
-              } else { // Кликаем по существующему файлу и спрашиваем нужно ли его переписать
+              } else {
                 
-                if (fileReadListener != null) {
+                if (fileReadListener != null) { // Кликаем по существующему файлу и спрашиваем нужно ли его переписать
                   
                   content = fileReadListener.onOpen (currentPath);
                   
@@ -363,24 +367,30 @@
               
               @Override
               public void onClick (View view) {
-                
-                if (dirListener != null || selectFileListener != null) {
-                  
-                  dialog.dismiss ();
-                  
-                  if (dirListener != null)
-                    dirListener.onSubmit (currentPath);
-                  
-                } else if (url != null) {
-                  
-                  List<String> parts = Arrays.explode ("?", url);
-                  currentPath = storage.toItem (currentPath.getFile (), Files.getName (parts.get (0), true));
-                  
-                  new CreateFile ("file").execute (dialog);
-                  
-                } else //if (allowNames.length > 0 && !Arrays.contains (fileChosen, allowNames) || allowNames.length < 0)
-                  newFileDialogShow (R.string.title_save, R.string.file_hint, currentPath, false, dialog);
-                
+	
+	              try {
+		
+		              if (dirListener != null || selectFileListener != null) {
+			
+			              dialog.dismiss ();
+			
+			              if (dirListener != null)
+				              dirListener.onSubmit (currentPath);
+			
+		              } else if (url != null) {
+			
+			              List<String> parts = Arrays.explode ("?", url);
+			              currentPath = storage.getItem (currentPath.getShortFile (), Files.getName (parts.get (0), true));
+			
+			              new CreateFile ("file").execute (dialog);
+			
+		              } else //if (allowNames.length > 0 && !Arrays.contains (fileChosen, allowNames) || allowNames.length < 0)
+			              newFileDialogShow (R.string.title_save, R.string.file_hint, currentPath, false, dialog);
+		              
+	              } catch (StorageException e) {
+		              errors.add (e);
+	              }
+	              
               }
               
             });
@@ -389,8 +399,14 @@
               dialog.getButton (AlertDialog.BUTTON_NEUTRAL).setOnClickListener (new View.OnClickListener () { // Создать папку
                 
                 @Override
-                public void onClick (View v) {
-                  newFileDialogShow (R.string.button_new_dir, R.string.dir_hint, currentPath, true, dialog);
+                public void onClick (View view) {
+                	
+	                try {
+		                newFileDialogShow (R.string.button_new_dir, R.string.dir_hint, currentPath, true, dialog);
+	                } catch (StorageException e) {
+		                errors.put (e);
+	                }
+	                
                 }
                 
               });
@@ -398,7 +414,7 @@
             dialog.getButton (AlertDialog.BUTTON_NEGATIVE).setOnClickListener (new View.OnClickListener () {
               
               @Override
-              public void onClick (View v) {
+              public void onClick (View view) {
                 dialog.dismiss ();
               }
               
@@ -406,7 +422,7 @@
             
           }
           
-          if (mDialog != null) mDialog.dismiss ();
+          //if (mDialog != null) mDialog.dismiss ();
           
         } else {
           
@@ -487,7 +503,7 @@
       newDialog.getButton (AlertDialog.BUTTON_POSITIVE).setOnClickListener (new View.OnClickListener () {
         
         @Override
-        public void onClick (View v) {
+        public void onClick (View view) {
           
           new CreateFile ("file").execute ();
           
@@ -501,7 +517,7 @@
       newDialog.getButton (AlertDialog.BUTTON_NEGATIVE).setOnClickListener (new View.OnClickListener () {
         
         @Override
-        public void onClick (View v) {
+        public void onClick (View view) {
           newDialog.dismiss ();
         }
         
@@ -546,26 +562,26 @@
     
     private String saveName = "";
     
-    private void newFileDialogShow (int title, int hint, final Item fileChosen, final boolean createDir, final AlertDialog oldDialog) {
+    private void newFileDialogShow (int title, int hint, final Item fileChosen, final boolean createDir, final AlertDialog oldDialog) throws StorageException {
       
       if (saveName.equals ("")) {
         
         AlertDialog.Builder builder = dialogBuilder ();
         builder.setTitle (title);
         
-        final ViewGroup parent = null;
-        final View view = LayoutInflater.from (activity).inflate (R.layout.dialog_input, parent);
+        final View view = LayoutInflater.from (activity).inflate (R.layout.dialog_input, null);
         
         builder.setView (view);
         
-        EditText input = view.findViewById (R.id.text1);
+        EditText input = (EditText) view.findViewById (R.id.text1);
         input.setHint (hint);
         
         builder.setPositiveButton (android.R.string.ok, new DialogInterface.OnClickListener () {
           
           @Override
-          public void onClick (DialogInterface dialog, int id) {}
-          // Должен быть пустым, так как мы подвешиваем свой обработчик далее
+          public void onClick (DialogInterface dialog, int id) {
+            // Должен быть пустым, так как мы подвешиваем свой обработчик далее
+          }
           
         });
         
@@ -584,14 +600,14 @@
           @Override
           public void onClick (View v) { // Нажали OK после ввода имени папки или файла
             
-            EditText input = view.findViewById (R.id.text1);
+            EditText input = (EditText) view.findViewById (R.id.text1);
             String mFile = input.getText ().toString ();
             
             if (createDir) { // Создаем папку
               
               if (!mFile.equals ("")) {
                 
-                currentPath = storage.toItem (fileChosen.getFile (), mFile).isDir (true);
+                currentPath = storage.setDir (fileChosen.getShortFile (), mFile);
                 new CreateFile ("folder").execute (dialog, oldDialog);
                 
               } else error (new IOException (activity.getString (R.string.message_dir_empty)));
@@ -599,12 +615,18 @@
             } else { // Пишем в файл
               
               if (!mFile.equals ("")) {
-                
-                if (Int.size (fileEndsWith) > 0) mFile += "." + fileEndsWith[0]; // TODO
-                currentPath = storage.toItem (fileChosen.getFile (), mFile);
-                
-                new CreateFile ("file").execute (dialog, oldDialog);
-                
+               
+              	try {
+		
+		              if (Int.size (fileEndsWith) > 0) mFile += "." + fileEndsWith[0]; // TODO
+		              currentPath = storage.getItem (fileChosen.getShortFile (), mFile);
+		
+		              new CreateFile ("file").execute (dialog, oldDialog);
+		              
+	              } catch (StorageException e) {
+		              error (e);
+	              }
+              	
               } else error (new IOException (activity.getString (R.string.message_filename_empty)));
               
             }
@@ -624,7 +646,7 @@
         
       } else {
         
-        currentPath = storage.toItem (fileChosen.getFile (), saveName);
+        currentPath = storage.getItem (fileChosen.getShortFile (), saveName);
         new CreateFile ("file").execute (oldDialog);
         
       }
@@ -663,15 +685,15 @@
           if (type.equals ("file")) {
             
             if (url != null)
-              storage.copy (new URL (url), currentPath.getFile ());
+              storage.copy (new URL (url), currentPath);
             else if (Int.size (items) > 0)
-              storage.write (items, currentPath.getFile ());
+              storage.put (items, currentPath);
             else
-              storage.write (content, currentPath.getFile ());
+              storage.put (content, currentPath);
             
-          } else return storage.makeDir (currentPath.getFile ());
+          } else return storage.makeDir (currentPath);
           
-        } catch (StorageException | IOException e) {
+        } catch (StorageException | IOException | OutOfMemoryException e) {
           errors.add (e);
         }
         
@@ -703,11 +725,11 @@
                 
                 if (Int.size (params) > 0) params[0].dismiss ();
                 if (Int.size (params) > 1) params[1].dismiss ();
-                
-                level = 1;
+	
+	              // И заходим в нее после создания
+	
+	              level = 1;
                 new ShowItems ().execute ();
-                
-                // И переходим к ней после создания
                 
                 if (dirListener != null)
                   dirListener.onCreateDir (currentPath);
@@ -747,7 +769,16 @@
     }
     
     private AlertDialog.Builder dialogBuilder () {
-      return new AlertDialog.Builder (activity, style);
+     
+    	AlertDialog.Builder builder;
+    	
+    	if (OS.SDK >= 11)
+        builder = new AlertDialog.Builder (activity, style);
+      else
+      	builder = new AlertDialog.Builder (activity);
+      
+      return builder;
+      
     }
     
   }
